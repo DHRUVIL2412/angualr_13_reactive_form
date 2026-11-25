@@ -1,0 +1,237 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">Student Form</a>
+    </div>
+  </div>
+</nav>
+
+<div class="row">
+  <div class="col-lg-1"></div>
+
+
+  <div class="col-lg-5">
+    <div class="submit-form">
+      <form [formGroup]="studentForm" id='studForm' >
+        <table>
+          <tr>
+            <td colspan="2">
+              <div class="form-group">
+                <label for="name">Student Name</label>
+                <input type="text" formControlName="name" class="form-control" id="name">
+                <div
+                  *ngIf="studentForm.controls['name'].invalid && (studentForm.controls['name'].dirty || studentForm.controls['name'].touched)"
+                  class="alert alert-danger" id="Alert-Invalid-Name">
+
+                  <div *ngIf="studentForm.controls['name'].errors?.['required']"> {{nameReqErr}}</div>
+                  <div *ngIf="studentForm.controls['name'].errors?.['minlength']">{{ nameMinErr}}</div>
+                  <div *ngIf="studentForm.controls['name'].errors?.['maxlength']">{{nameMaxErr}}</div>
+                  <div *ngIf="studentForm.controls['name'].errors?.['pattern']">{{nameNumErr}}</div>
+                  <!--should display validation error messages for name -->
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2">
+              <div class="form-group">
+                <label for="major">Major</label>
+                <div class="form-control">
+                  <label class="radio-inline">
+                    <input type="radio" formControlName="major" value="Biology" id="major1" required>
+                    Biology
+                  </label> 
+                  <label class="radio-inline">
+                    <input type="radio" formControlName="major" value="Computer Science" id="major2" required checked>
+                    Computer Science
+                    <!--In default, the computer science radio should be checked-->
+                  </label>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="maths">Maths</label>
+                <input formControlName="maths" type="number" class="form-control" id="maths">
+                <div
+                  *ngIf="studentForm.controls['maths'].invalid && (studentForm.controls['maths'].dirty || studentForm.controls['maths'].touched)"
+                  class="alert alert-danger" id="Alert-Invalid-Maths">
+                  <div *ngIf="studentForm.controls['maths'].errors?.['required']">{{mathsReqErr}}</div>
+                  <div *ngIf="studentForm.controls['maths'].errors?.['min']">{{mathsRangeErr}}</div>
+                  <div *ngIf="studentForm.controls['maths'].errors?.['max']">{{mathsRangeErr}}</div>
+                  <!--should display validation error messages for maths mark -->
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="physics">Physics</label>
+                <input formControlName="physics" type="number" class="form-control" id="physics">
+                <div
+                  *ngIf="studentForm.controls['physics'].invalid && (studentForm.controls['physics'].dirty || studentForm.controls['physics'].touched)"
+                  class="alert alert-danger" id="Alert-Invalid-Physics">
+                  <div *ngIf="studentForm.controls['physics'].errors?.['required']">{{phyReqErr}}</div>
+                  <div *ngIf="studentForm.controls['physics'].errors?.['min']">{{phyRangeErr}}</div>
+                  <div *ngIf="studentForm.controls['physics'].errors?.['max']">{{phyRangeErr}}</div>
+
+                  <!--should display validation error messages for physics mark -->
+
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="chemistry">Chemistry</label>
+                <input formControlName="chemistry" type="number" class="form-control" id="chemistry">
+                <div
+                  *ngIf="studentForm.controls['chemistry'].invalid && (studentForm.controls['chemistry'].dirty || studentForm.controls['chemistry'].touched)"
+                  class="alert alert-danger" id="Alert-Invalid-Chemistry">
+                  <div *ngIf="studentForm.controls['chemistry'].errors?.['required']">{{chemReqErr}}</div>
+                  <div *ngIf="studentForm.controls['chemistry'].errors?.['min']">{{chemRangeErr}}</div>
+                  <div *ngIf="studentForm.controls['chemistry'].errors?.['max']">{{chemRangeErr}}</div>
+                  <!--should display validation error messages for chemistry mark -->
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="majorMark" id="csLabel" *ngIf="studentForm.controls['major'].value == 'Computer Science'">Computer
+                  Science</label><!--should display when computer science radio is checked-->
+                <label for="biology" id="bioLabel" *ngIf="studentForm.controls['major'].value !== 'Computer Science'">Biology</label><!--should display when biology radio is checked-->
+                <input formControlName="majorMark" type="number" class="form-control" id="majorMark">
+                
+                <div
+                  *ngIf="studentForm.controls['majorMark'].invalid && (studentForm.controls['majorMark'].dirty || studentForm.controls['majorMark'].touched)"
+                  class="alert alert-danger" id="Alert-Invalid-MajorMark">
+                  <div *ngIf="studentForm.controls['majorMark'].errors?.['required']">{{majorReqErr}} </div>
+                  <div *ngIf="studentForm.controls['majorMark'].errors?.['min']">{{majorRangeErr}} </div>
+                  <div *ngIf="studentForm.controls['majorMark'].errors?.['max']">{{majorRangeErr}} </div>
+
+                  <!--should display validation error messages for major mark -->
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2"><b>Extra-Curricular : </b></td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="form-group">
+                <label class="checkbox-inline">
+                  <input formControlName="ncc" id="ncc" type="checkbox">NCC
+                </label>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label class="checkbox-inline">
+                  <input formControlName="sports" id="sports" type="checkbox">Sports
+                </label>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <button class="btn btn-primary" id="addBtn" [disabled]="studentForm.invalid" (click)="addStudent(studentForm)">Add Student</button>
+            <!--button should be disabled if form is invalid and click should call addStudent-->
+            <button class="btn btn-primary" id="updateBtn" [disabled]="studentForm.invalid || !IsForUpdate" (click)="updateStudent(studentForm)">Update Student</button>
+            <!--button should be disabled if form is invalid and click should call updateStudent-->
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="col-11 header">Student Details</div>
+    <br>
+    <div class="col-sm-10 col-sm-offset-1" *ngFor="let student of students; let i = index">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <p id="resStu">
+            {{student.name}} - {{student.major}}
+            <!-- <name of the student> - MAJOR: <major subject of the student> -->
+            <span style="float: right;cursor: pointer;">
+              <button id="editBtn" style="background-color: #337ab7;border: none;"
+              (click)="editStudent(studentForm , i)">
+                <!-- button click should call editStudent with details and index" -->
+                <span class="glyphicon glyphicon-edit"></span>
+              </button>
+              <button id="delBtn" style="background-color: #337ab7;border: none;" (click)="deleteStudent(i)">
+                <!-- button click should call deleteStudent with details and index" -->
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </span>
+          </p>
+        </div>
+        <div class="panel-body">
+          <table class="table">
+            <tr>
+              <th>Subjects</th>
+              <th>Marks</th>
+            </tr>
+            <tr>
+              <td>Maths</td>
+              <td id="resMat">
+                {{student.maths}}
+                <!-- student's maths mark -->
+              </td>
+            </tr>
+            <tr>
+              <td>Physics</td>
+              <td id="resPhy">
+                {{student.physics}}
+                <!-- student's physics mark -->
+              </td>
+            </tr>
+            <tr>
+              <td>Chemistry</td>
+              <td id="resChe">
+                {{student.chemistry}}
+                <!-- student's chemistry mark -->
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {{student.major}}
+                <!-- major subject of student -->
+              </td>
+              <td id="resMaj">
+                {{student.majorMark}}
+                <!-- student's major mark -->
+              </td>
+            </tr>
+            <tr>
+              <td><b>Total</b></td>
+              <td id="resTot"><b>
+                {{ student.maths + student.physics + student.chemistry + student.majorMark}}
+                  <!-- Total of all subject marks -->
+                </b>
+              </td>
+            </tr>
+            <tr>
+              <td><b>Extra-Curricular Activities</b></td>
+              <td id="resAct">
+                <p *ngIf="student.ncc ">NCC</p><!--display if student is in NCC-->
+                <p *ngIf="student.sports ">Sports</p><!--display if student is in Sports-->
+                <p *ngIf="(student.sports==null) && (student.ncc == null) ? true : false">N/A</p><!--display if student is not in both Sports and NCC-->
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-1"></div>
+</div>
